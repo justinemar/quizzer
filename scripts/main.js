@@ -1,3 +1,4 @@
+"use strict"
 var Allquestions = [{
         question: "Who is naruto's father?",
         choices: ["Jiraiya", "Sarutobi", "Orichimaru", "Minato"],
@@ -52,9 +53,6 @@ $(document).ready(function() {
         createQuiz(page);
         updateDomPage(countPage);
     });
-
-
-
 })
 
 
@@ -62,31 +60,31 @@ function createQuiz(crPage) {
     textNode = Allquestions[indexController].question;
     switch (crPage) {
         case 0:
-            $("legend").append(textNode);
+            appendQuestion()
             appendChoices()
             break;
         case 1:
-            $("legend").append(textNode);
+            appendQuestion()
             appendChoices()
             break;
         case 2:
-            $("legend").append(textNode);
+            appendQuestion()
             appendChoices()
             break;
         case 3:
-            $("legend").append(textNode);
+            appendQuestion()
             appendChoices()
             break;
         case 4:
-            $("legend").append(textNode);
+            appendQuestion()
             appendChoices()
             break;
         case 5:
-            $("legend").append(textNode);
+            appendQuestion()
             appendChoices()
             break;
         case 6:
-            $("legend").append(textNode);
+            appendQuestion()
             appendChoices()
             break;
 
@@ -111,8 +109,10 @@ function updateDomPage(val) {
 
 function appendChoices() {
     for (var i = 0; i < Allquestions[indexController].choices.length; i++) {
-        
-            $()
             console.log(Allquestions[indexController].choices[i]);
     }
+}
+function appendQuestion(){
+                $('legend').empty()
+            .append(textNode);
 }
