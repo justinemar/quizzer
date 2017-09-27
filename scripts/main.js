@@ -41,8 +41,13 @@ var Allquestions = [{
     },
     {
         question: "Was naruto able to control his jinjuriki during the pain attack?",
-        choices: ["Yes\,\ his father helped him", "Yes\,\ he trained at Mount Myōboku to control the 9 tails power", "No\,\ he wasn't able to control the 9 tails power", "No\,\ he wasn't able to control the 9 tails but he became friend with kurama"],
+        choices: ["Yes, his father helped him", "Yes, he trained at Mount Myōboku to control the 9 tails power", "No, he wasnt able to control the 9 tails power", "No, he wasnt able to control the 9 tails but he became friend with kurama"],
         answer: 2
+    },
+    {
+        question: "Kakashi's father Sakumo Hatake is renowned across the shinobi world as Konoha's White Fang, what is Kakashis famous title?",
+        choices: ["Copy Ninja Kakashi", "Kakashi the Sharingan", "New White Fang", "Konoha's Yellowflash"],
+        answer: 1
     }
 ];
 
@@ -52,15 +57,16 @@ var countPage = 1; // FAKE PAGE DEFAULT VALUE //
 var alreadyAnswered = false; // UNIQUE ANSWER VALIDATION //
 var page = 0; // INDEX PAGE DEFAULT VALUE //
 var textNode = ""; // QUESTION TEXT DEFAULT VALUE //
-//var inputID = 0;
+var msgbox = "#info-msg";
+var currentScore = "#info-score";
+var correctAns = 0;
 var indexController = 0; // INDEX DEFAULT VALUE //
 // READY AND CALL //
 $(document).ready(function() {
+    $(msgbox).empty();
     createQuiz(page); //CREATE QUESTION DEFAULT // 
     $("#navigate").on('click', function() {
         validateAnswer(); //VALIDATE ANSWER BEFORE PROCEEDING//
-        console.log(page);
-        
     });
     $("#submit").on('click', function(){
         checkAnswer();
@@ -100,7 +106,9 @@ function createQuiz(crPage) {
             appendQuestion()
             appendChoices()
             break;
-
+        case 7:
+            appendQuestion()
+            appendChoices()
         default:
             // code
 
@@ -109,24 +117,26 @@ function createQuiz(crPage) {
 
 
 function checkAnswer(){
-    var correctAns = 1;
     for(var i=0; i < answersArr.length; i++){
         //console.log(answersArr[i],Allquestions[i].choices[Allquestions[i].answer], correctAns);
         if(answersArr[i] === Allquestions[i].choices[Allquestions[i].answer]){
-            correctAns += 1;
+            correctAns += 5;
             console.log(answersArr[i],Allquestions[i].choices[Allquestions[i].answer], correctAns);
         }
-        console.log(correctAns);
+        //console.log(correctAns,answersArr);
     }
-    
+    $(currentScore).html("SCORE :" + correctAns);
+  
 }
 function validateAnswer() {
     var inputElem = $("input[name=answer]:checked"); //GET SELECTED ANSWER//
     if (inputElem.val() !== undefined) {
         answersArr.push(inputElem.val()); //LETS PUSH THE ANSWER TO OUR ARRAY //
-        if (page >= 6) {
+        console.log("Score " + correctAns + " Answer " + answersArr);
+        
+        if (page >= 7) {
             $("#submit").css("display","block"); // LAST PAGE, CHECK ANSWER //
-            $("#navigate").css("display","none");
+            $("#navigate").css("display","none"); //HIDE NEXT BTN//
         }
         else {
         page += 1; // INCREMENT OUR PAGE COUNT //
@@ -136,7 +146,8 @@ function validateAnswer() {
         }
     }
     else {
-        alert("YOU CAN'T DO THAT"); //EMPTY VALUE NOT ACCEPTED//
+        $(msgbox).html("You can't do that!").fadeIn(1000).fadeOut(200);
+  
     }
 
 }
@@ -145,7 +156,7 @@ function validateAnswer() {
 function updateDomPage(val) {
     val = countPage += 1;
     var pageHTML = $("#currentPage");
-    if (pageHTML.html() === "6") {
+    if (pageHTML.html() === "7") {
         val,
         countPage = 0;
         pageHTML.html(val)
