@@ -1,11 +1,4 @@
-"use strict"
-/*
-QUESTIONS PROPERTIES IN ARRAY OBJECTS 
-WHERE IN 'question' property is question 
-WHERE IN 'choices' property is question choices representation
-WHERE IN 'answer' property is question correct answer
 
-*/
 
 var Allquestions = [{
         question: "Who is naruto's father?",
@@ -59,7 +52,7 @@ var page = 0; // INDEX PAGE DEFAULT VALUE //
 var textNode = ""; // QUESTION TEXT DEFAULT VALUE //
 var msgbox = "#info-msg";
 var currentScore = "#info-score";
-var correctAns = 0;
+var score = 0; // COUNT CORRECT ANSWER //
 var indexController = 0; // INDEX DEFAULT VALUE //
 // READY AND CALL //
 $(document).ready(function() {
@@ -69,7 +62,7 @@ $(document).ready(function() {
         validateAnswer(); //VALIDATE ANSWER BEFORE PROCEEDING//
     });
     $("#submit").on('click', function(){
-        checkAnswer();
+        checkAnswer(); //LET'S CHECK ANSWERS //
     })
 })
 
@@ -79,8 +72,8 @@ function createQuiz(crPage) {
     textNode = Allquestions[indexController].question;
     switch (crPage) {
         case 0:
-            appendQuestion()
-            appendChoices()
+            appendQuestion() //APPEND CURRENT QUESTION//
+            appendChoices() //APPEND CORRESPONDING CHOICES//
             break;
         case 1:
             appendQuestion()
@@ -117,23 +110,20 @@ function createQuiz(crPage) {
 
 
 function checkAnswer(){
-    for(var i=0; i < answersArr.length; i++){
-        //console.log(answersArr[i],Allquestions[i].choices[Allquestions[i].answer], correctAns);
-        if(answersArr[i] === Allquestions[i].choices[Allquestions[i].answer]){
-            correctAns += 5;
-            console.log(answersArr[i],Allquestions[i].choices[Allquestions[i].answer], correctAns);
+    var i;
+    var ar = answersArr.length;
+    for(i=0; i < ar; i++){
+        if(answersArr[i] === Allquestions[i].choices[Allquestions[i].answer]){ //CHECK IF ANSWER IS CORRECT//
+            score += 5; //ADD +5 ON EVERY CORRECT ANSWER//
         }
-        //console.log(correctAns,answersArr);
     }
-    $(currentScore).html("SCORE :" + correctAns);
-  
+    $(currentScore).html("SCORE :" + score); // SHOW OUR SCORE//
+    answersArr = [];
 }
 function validateAnswer() {
     var inputElem = $("input[name=answer]:checked"); //GET SELECTED ANSWER//
-    if (inputElem.val() !== undefined) {
+    if (inputElem.val() !== undefined) { //PROCEED//
         answersArr.push(inputElem.val()); //LETS PUSH THE ANSWER TO OUR ARRAY //
-        console.log("Score " + correctAns + " Answer " + answersArr);
-        
         if (page >= 7) {
             $("#submit").css("display","block"); // LAST PAGE, CHECK ANSWER //
             $("#navigate").css("display","none"); //HIDE NEXT BTN//
@@ -146,8 +136,7 @@ function validateAnswer() {
         }
     }
     else {
-        $(msgbox).html("You can't do that!").fadeIn(1000).fadeOut(200);
-  
+        $(msgbox).html("You can't do that!").fadeIn(1000).fadeOut(200);//SHOW MESSAGE//
     }
 
 }
@@ -155,20 +144,16 @@ function validateAnswer() {
 // UPDATE PAGE COUNT //
 function updateDomPage(val) {
     val = countPage += 1;
-    var pageHTML = $("#currentPage");
-    if (pageHTML.html() === "7") {
-        val,
-        countPage = 0;
-        pageHTML.html(val)
-    }
-    else {
-        pageHTML.html(val);
-    }
+    var pageHTML = $("#currentPage"); //GET ELEMENT THAT HOLD FAKE QUESTION COUNT//
+    pageHTML.html(val);
+  
 }
 // APPEND QUESTION CHOICES BASED ON QUESTION INDEX //
 function appendChoices() {
     $("#choices").empty(); // REMOVE EXISTING CHOICES //
-    for (var i = 0; i < Allquestions[indexController].choices.length; i++) {
+    var i;
+    var al = Allquestions[indexController].choices.length;
+    for (var i = 0; i < al; i++) {
         //console.log(Allquestions[indexController].choices[i]); // TEST ACCESS
         $("#choices").append("<input class='radiobtn' type='radio' id='" + indexController + "' name='answer' value='" + Allquestions[indexController].choices[i] + "'>") //CREATE RADIO BUTTON WITH ID/VALUE BASE ON INDEX//
         $("#choices").append("<label for='" + indexController + "'>" + Allquestions[indexController].choices[i] + "</label>") // CREATE LABEL CHOICES REPRESENTATION //
