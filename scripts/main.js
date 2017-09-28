@@ -70,42 +70,8 @@ $(document).ready(function() {
 function createQuiz(crPage) {
     // CURRENT INDEX QUESTION //
     textNode = Allquestions[indexController].question;
-    switch (crPage) {
-        case 0:
-            appendQuestion() //APPEND CURRENT QUESTION//
-            appendChoices() //APPEND CORRESPONDING CHOICES//
-            break;
-        case 1:
-            appendQuestion()
-            appendChoices()
-            break;
-        case 2:
-            appendQuestion()
-            appendChoices()
-            break;
-        case 3:
-            appendQuestion()
-            appendChoices()
-            break;
-        case 4:
-            appendQuestion()
-            appendChoices()
-            break;
-        case 5:
-            appendQuestion()
-            appendChoices()
-            break;
-        case 6:
-            appendQuestion()
-            appendChoices()
-            break;
-        case 7:
-            appendQuestion()
-            appendChoices()
-        default:
-            // code
-
-    }
+    appendQuestion();
+    appendChoices();
 }
 
 
